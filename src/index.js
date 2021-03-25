@@ -6,6 +6,8 @@ const reducer = (state = 0, action) => {
       return state + 1;
     case 'DEC':
       return state - 1;
+    case 'RND':
+      return state + action.payload;
     default: 
       return state;
   }
@@ -13,16 +15,27 @@ const reducer = (state = 0, action) => {
 
 const store = createStore(reducer);
 
+const dec = () => ({ type: 'DEC' });
+const inc = () => ({ type: 'INC' });
+const rnd = (payload) => ({ type: 'RND', payload });
+
 document
   .getElementById('dec')
   .addEventListener('click', () => {
-    store.dispatch({ type: 'DEC' });
+    store.dispatch(dec());
   });
 
-  document
+document
   .getElementById('inc')
   .addEventListener('click', () => {
-    store.dispatch({ type: 'INC' });
+    store.dispatch(inc());
+  });
+
+document
+  .getElementById('rnd')
+  .addEventListener('click', () => {
+    const payload = Math.floor(Math.random() * 10);
+    store.dispatch(rnd(payload));
   });
 
 const update = () => {
